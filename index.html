@@ -277,7 +277,7 @@ body.theme-dark .b-nav{background:rgba(28,28,30,0.92)}
         <!-- SETTINGS -->
         <div class="settings" id="SP">
           <div class="set-header">
-            <button class="set-back" onclick="document.getElementById('SP').classList.remove('open')">←</button>
+            <button class="set-back" onclick="closeSettings()">←</button>
             <h2>Einstellungen</h2>
           </div>
           <div class="set-body">
@@ -334,7 +334,7 @@ body.theme-dark .b-nav{background:rgba(28,28,30,0.92)}
           <button class="n-item active"><span class="n-icon">🏠</span><span class="n-lbl">Start</span></button>
           <button class="n-item"><span class="n-icon">💬</span><span class="n-lbl">Gespräche</span></button>
           <button class="n-item"><span class="n-icon">⭐</span><span class="n-lbl">Gespeichert</span></button>
-          <button class="n-item" onclick="document.getElementById('SP').classList.add('open')"><span class="n-icon">⚙️</span><span class="n-lbl">Einstellungen</span></button>
+          <button class="n-item" onclick="openSettings()"><span class="n-icon">⚙️</span><span class="n-lbl">Einstellungen</span></button>
         </nav>
       </div>
     </div>
@@ -401,71 +401,53 @@ body.theme-dark .b-nav{background:rgba(28,28,30,0.92)}
 </div>
 
 <script>
-/* ─── SYNTHFLOW WIDGET INTEGRATION ─── */
-const AGENT_ID = '8e593c25-76c7-4801-b91f-8d981a20f6dd';
+/* ─── AGENT ID ─── */
+var AGENT_ID = '8e593c25-76c7-4801-b91f-8d981a20f6dd';
 
-// Synthflow Widget laden
-(function() {
-  var s = document.createElement('script');
-  s.src = 'https://widget.synthflow.ai/widget.js';
-  s.async = true;
-  s.defer = true;
-  s.dataset.agentId = AGENT_ID;
-  s.dataset.mode = 'overlay';
-  s.onload = function() { console.log('Synthflow Widget geladen'); };
-  document.head.appendChild(s);
-})();
-
-// Sprachgespräch starten
+/* ─── VOICE MODAL ─── */
 function startVoice() {
-  const modal = document.getElementById('VM');
-  const status = document.getElementById('voiceStatus');
-  const orb = document.getElementById('orbAnim');
-  modal.classList.add('open');
-  status.textContent = 'Verbinde mit Mia …';
-  orb.textContent = '🎙️';
-
-  // Synthflow Widget aufrufen falls verfügbar
-  setTimeout(function() {
-    if (window.SynthflowWidget && typeof window.SynthflowWidget.open === 'function') {
-      window.SynthflowWidget.open();
-      status.textContent = 'Mia hört zu …';
-    } else if (document.querySelector('synthflow-widget')) {
-      document.querySelector('synthflow-widget').click();
-      status.textContent = 'Mia hört zu …';
-    } else {
-      // Direkte API-Verbindung als Fallback
-      status.textContent = 'Mia hört zu …';
-      orb.textContent = '🎙️';
-    }
-  }, 800);
+  document.getElementById('VM').classList.add('open');
+  document.getElementById('voiceStatus').textContent = 'Mia hört zu …';
 }
-
-// Gespräch beenden
 function stopVoice() {
   document.getElementById('VM').classList.remove('open');
-  if (window.SynthflowWidget && typeof window.SynthflowWidget.close === 'function') {
-    window.SynthflowWidget.close();
-  }
 }
 
-/* ─── EINSTELLUNGEN ─── */
+/* ─── SETTINGS ─── */
+function openSettings() {
+  document.getElementById('SP').classList.add('open');
+}
+function closeSettings() {
+  document.getElementById('SP').classList.remove('open');
+}
+
+/* ─── FONT SIZE ─── */
 function setFont(s, btn) {
-  document.querySelectorAll('.fs-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.fs-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
-  const B = document.getElementById('B');
-  B.className = B.className.replace(/font-\w+/g, '').trim() + ' font-' + s;
+  var B = document.getElementById('B');
+  B.className = B.className.replace(/font-\w+/g,'').trim() + ' font-' + s;
 }
 
+/* ─── THEME ─── */
 function setTheme(t, btn) {
-  document.querySelectorAll('.th-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.th-btn').forEach(function(b){ b.classList.remove('active'); });
   btn.classList.add('active');
-  const B = document.getElementById('B');
-  B.className = B.className.replace(/theme-\w+/g, '').trim() + ' theme-' + t;
+  var B = document.getElementById('B');
+  B.className = B.className.replace(/theme-\w+/g,'').trim() + ' theme-' + t;
 }
-</script>
 
-<!-- Synthflow Voice Widget Container (versteckt, wird per Script aktiviert) -->
-<div id="synthflow-widget-container" style="position:fixed;bottom:20px;right:20px;z-index:9999"></div>
+/* ─── TOUCH FIX für Mobile ─── */
+document.addEventListener('DOMContentLoaded', function() {
+  // Alle Buttons touch-fähig machen
+  var btns = document.querySelectorAll('button, .chan-card, .q-btn, .ch-card, .wc, .n-item');
+  btns.forEach(function(btn) {
+    btn.addEventListener('touchend', function(e) {
+      e.preventDefault();
+      this.click();
+    }, { passive: false });
+  });
+});
+</script>
 </body>
 </html>
