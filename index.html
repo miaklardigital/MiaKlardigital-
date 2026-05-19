@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Mia – KlarDigital</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;0,9..144,700;1,9..144,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#F2F0EB;--surface:#FFFFFF;--ink:#1A1A1E;--ink2:#6E6E78;
+  --mint:#30C67C;--mint-d:#1E9E5E;--mint-bg:#E3F8EE;
+  --amber:#F0A020;--coral:#E05040;--blue:#3878E8;
+  --border:rgba(0,0,0,0.08);--shadow:0 2px 20px rgba(0,0,0,0.08);
+  --r-sm:12px;--r-md:18px;--r-lg:24px;--r-xl:32px;
+}
+body.theme-dark{--bg:#0E0E10;--surface:#1C1C1E;--ink:#F5F5F5;--ink2:#8E8E93;--border:rgba(255,255,255,0.08)}
+body.theme-warm{--bg:#FBF5EC;--surface:#FFF9F2;--ink:#2A1F14;--ink2:#8A7060}
+body.theme-high{--bg:#FFFFFF;--surface:#F0F0F0;--ink:#000000;--ink2:#333333;--mint:#006E35;--mint-d:#005228}
+body.font-lg{font-size:17px}body.font-xl{font-size:20px}body.font-sm{font-size:12px}
+html{background:var(--bg)}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--ink);min-height:100vh;overflow-x:hidden;transition:background 0.3s,color 0.3s}
+
+/* PAGE */
+.page-header{text-align:center;padding:48px 32px 0}
+.badge{display:inline-flex;align-items:center;gap:6px;background:var(--mint-bg);color:var(--mint-d);font-size:12px;font-weight:500;padding:5px 14px;border-radius:100px;margin-bottom:16px;border:1px solid rgba(30,158,94,0.2)}
+.page-header h1{font-family:'Fraunces',serif;font-size:clamp(32px,5vw,52px);font-weight:700;color:var(--ink);line-height:1.1;margin-bottom:10px}
+.page-header h1 em{color:var(--mint-d);font-style:italic}
+.page-header p{font-size:16px;color:var(--ink2);max-width:500px;margin:0 auto 6px;line-height:1.6;font-weight:300}
+.slogan-badge{display:inline-block;font-family:'Fraunces',serif;font-size:17px;font-weight:600;color:var(--mint-d);font-style:italic;margin:10px 0 40px;background:var(--mint-bg);padding:8px 20px;border-radius:100px;border:1px solid rgba(30,158,94,0.2)}
+.legend{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;padding:0 32px 48px}
+.legend-item{display:flex;align-items:center;gap:8px;background:var(--surface);padding:8px 16px;border-radius:100px;font-size:13px;color:var(--ink);box-shadow:var(--shadow)}
+
+/* DEVICES */
+.showcase{display:flex;gap:40px;padding:0 32px 80px;align-items:flex-start;justify-content:center;flex-wrap:wrap}
+.device-label{text-align:center;font-size:11px;font-weight:500;letter-spacing:2px;text-transform:uppercase;color:var(--ink2);margin-bottom:16px}
+
+/* PHONE */
+.phone{width:320px;flex-shrink:0}
+.phone-shell{background:#1A1A1E;border-radius:48px;padding:12px;box-shadow:0 32px 80px rgba(0,0,0,0.3),inset 0 1px 0 rgba(255,255,255,0.1);position:relative}
+.phone-shell::before{content:'';position:absolute;top:20px;left:50%;transform:translateX(-50%);width:100px;height:30px;background:#1A1A1E;border-radius:0 0 20px 20px;z-index:10}
+.phone-screen{background:var(--bg);border-radius:40px;overflow:hidden;min-height:660px;position:relative}
+.status-bar{background:var(--bg);padding:14px 24px 6px;display:flex;justify-content:space-between;font-size:12px;font-weight:600;color:var(--ink);z-index:5;position:relative}
+
+/* HOME */
+.app-home{padding:0 20px 110px}
+.greeting-time{font-size:13px;color:var(--ink2);margin-bottom:4px;padding-top:6px}
+.greeting-name{font-family:'Fraunces',serif;font-size:26px;font-weight:700;color:var(--ink);line-height:1.1;margin-bottom:20px}
+.greeting-name em{color:var(--mint-d);font-style:italic}
+
+/* HERO */
+.mia-hero{background:linear-gradient(135deg,#1A2E20 0%,#2A5C3A 100%);border-radius:var(--r-xl);padding:22px;margin-bottom:16px;position:relative;overflow:hidden;box-shadow:0 8px 32px rgba(30,158,94,0.25)}
+.mia-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:160px;height:160px;background:radial-gradient(circle,rgba(48,198,124,0.2) 0%,transparent 70%);pointer-events:none}
+.mia-top{display:flex;align-items:center;gap:14px;margin-bottom:14px}
+.mia-av{width:48px;height:48px;background:var(--mint);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:24px;box-shadow:0 4px 16px rgba(48,198,124,0.4);flex-shrink:0}
+.mia-info h2{font-family:'Fraunces',serif;font-size:20px;font-weight:600;color:#fff;margin-bottom:3px}
+.online-pill{display:inline-flex;align-items:center;gap:5px;background:rgba(255,255,255,0.15);padding:3px 10px;border-radius:100px;font-size:11px;color:rgba(255,255,255,0.85)}
+.online-dot{width:6px;height:6px;background:var(--mint);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* HERO BUTTONS */
+.hero-btns{display:grid;grid-template-columns:1fr auto;gap:10px}
+.call-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:var(--mint);color:var(--ink);border:none;border-radius:var(--r-lg);padding:15px;font-family:'DM Sans',sans-serif;font-size:16px;font-weight:600;cursor:pointer;box-shadow:0 4px 16px rgba(48,198,124,0.3);transition:transform 0.15s}
+.call-btn:active{transform:scale(0.97)}
+.voice-btn{background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.25);border-radius:var(--r-lg);padding:14px 16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;cursor:pointer;transition:all 0.2s}
+.voice-btn:hover{background:rgba(255,255,255,0.18)}
+.voice-btn:active{transform:scale(0.95)}
+.mic-icon{font-size:22px}
+.voice-lbl{font-size:9px;font-weight:600;color:rgba(255,255,255,0.6);letter-spacing:0.5px;text-transform:uppercase}
+
+/* SECTION */
+.s-head{font-size:11px;font-weight:500;color:var(--ink2);letter-spacing:1.5px;margin:16px 0 10px;text-transform:uppercase}
+
+/* CHANNELS */
+.ch-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.ch-card{background:var(--surface);border-radius:var(--r-lg);padding:16px 14px;border:none;cursor:pointer;text-align:left;transition:transform 0.15s;box-shadow:var(--shadow)}
+.ch-card:active{transform:scale(0.97)}
+.ch-icon{width:44px;height:44px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;font-size:22px;margin-bottom:8px}
+.ci-g{background:#E3F8EE}.ci-t{background:#E0F4F1}.ci-a{background:#FEF3DC}.ci-b{background:#E6EFFE}
+.ch-card h4{font-size:14px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.ch-card p{font-size:11px;color:var(--ink2);line-height:1.4}
+
+/* QUICK */
+.q-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:16px}
+.q-btn{background:var(--surface);border-radius:var(--r-md);padding:12px 6px;border:none;cursor:pointer;text-align:center;transition:transform 0.15s;box-shadow:var(--shadow)}
+.q-btn:active{transform:scale(0.95)}
+.q-icon{font-size:24px;margin-bottom:5px;display:block}
+.q-btn span{font-size:10px;font-weight:500;color:var(--ink2);line-height:1.2;display:block}
+
+/* RECENT */
+.r-card{background:var(--surface);border-radius:var(--r-lg);padding:14px;box-shadow:var(--shadow)}
+.r-item{display:flex;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid var(--border)}
+.r-item:last-child{border-bottom:none;padding-bottom:0}
+.r-item:first-child{padding-top:0}
+.r-icon{width:36px;height:36px;border-radius:50%;background:var(--mint-bg);display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.r-text{flex:1}
+.r-text h5{font-size:13px;font-weight:500;color:var(--ink);margin-bottom:1px}
+.r-text p{font-size:11px;color:var(--ink2)}
+.r-date{font-size:10px;color:var(--ink2)}
+
+/* BOTTOM NAV */
+.b-nav{position:absolute;bottom:0;left:0;right:0;background:rgba(255,255,255,0.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid var(--border);padding:10px 8px 22px;display:flex;justify-content:space-around;z-index:50}
+body.theme-dark .b-nav{background:rgba(28,28,30,0.92)}
+.n-item{display:flex;flex-direction:column;align-items:center;gap:3px;padding:6px 14px;border-radius:var(--r-sm);border:none;background:none;cursor:pointer;transition:all 0.15s}
+.n-item.active .n-icon,.n-item.active .n-lbl{color:var(--mint-d)}
+.n-item.active .n-lbl{font-weight:600}
+.n-icon{font-size:22px;color:var(--ink2)}
+.n-lbl{font-size:10px;color:var(--ink2);font-weight:400}
+
+/* SETTINGS */
+.settings{position:absolute;top:0;left:0;right:0;bottom:0;background:var(--bg);z-index:100;display:none;flex-direction:column;overflow-y:auto}
+.settings.open{display:flex}
+.set-header{padding:52px 20px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;background:var(--bg);z-index:5}
+.set-back{background:var(--surface);border:none;width:36px;height:36px;border-radius:50%;cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;box-shadow:var(--shadow)}
+.set-header h2{font-family:'Fraunces',serif;font-size:22px;font-weight:700;color:var(--ink)}
+.set-body{padding:0 20px 80px}
+.set-section{margin-bottom:22px}
+.set-label{font-size:11px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;color:var(--ink2);margin-bottom:8px}
+.set-card{background:var(--surface);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow)}
+.set-row{display:flex;align-items:center;padding:13px 16px;border-bottom:1px solid var(--border);gap:12px}
+.set-row:last-child{border-bottom:none}
+.set-row-ico{font-size:20px;width:28px;text-align:center;flex-shrink:0}
+.set-row-txt{flex:1}
+.set-row-txt h4{font-size:14px;font-weight:500;color:var(--ink)}
+.set-row-txt p{font-size:12px;color:var(--ink2);margin-top:1px}
+.set-row-act{flex-shrink:0}
+
+/* FONT BUTTONS */
+.fs-row{display:flex;gap:6px;width:100%}
+.fs-btn{background:var(--bg);border:1.5px solid var(--border);border-radius:8px;padding:7px 14px;font-family:'DM Sans',sans-serif;cursor:pointer;color:var(--ink);transition:all 0.15s}
+.fs-btn.active{background:var(--mint);border-color:var(--mint);color:var(--ink);font-weight:600}
+
+/* THEME BUTTONS */
+.th-row{display:grid;grid-template-columns:repeat(4,1fr);gap:6px;width:100%}
+.th-btn{border:2px solid var(--border);border-radius:10px;padding:8px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all 0.15s;background:none}
+.th-btn.active{border-color:var(--mint)}
+.th-swatch{width:28px;height:28px;border-radius:50%}
+.th-btn span{font-size:10px;color:var(--ink2)}
+
+/* TOGGLE */
+.toggle{width:44px;height:26px;background:var(--border);border-radius:13px;position:relative;cursor:pointer;transition:background 0.2s;border:none;flex-shrink:0}
+.toggle.on{background:var(--mint)}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:20px;height:20px;background:white;border-radius:50%;transition:transform 0.2s;box-shadow:0 1px 4px rgba(0,0,0,0.2)}
+.toggle.on::after{transform:translateX(18px)}
+
+/* VOICE MODAL */
+.v-modal{position:absolute;top:0;left:0;right:0;bottom:0;background:rgba(15,25,18,0.97);z-index:200;display:none;flex-direction:column;align-items:center;justify-content:center;gap:20px}
+.v-modal.open{display:flex}
+.v-orb{width:120px;height:120px;background:radial-gradient(circle,var(--mint) 0%,var(--mint-d) 100%);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:52px;animation:orbPulse 1.5s infinite}
+@keyframes orbPulse{0%{box-shadow:0 0 0 0 rgba(48,198,124,0.5)}70%{box-shadow:0 0 0 30px rgba(48,198,124,0)}100%{box-shadow:0 0 0 0 rgba(48,198,124,0)}}
+.v-modal h3{font-family:'Fraunces',serif;font-size:24px;color:#fff}
+.v-modal p{font-size:14px;color:rgba(255,255,255,0.5);text-align:center;max-width:220px}
+.v-stop{background:rgba(255,255,255,0.1);border:1.5px solid rgba(255,255,255,0.2);border-radius:100px;padding:12px 28px;color:rgba(255,255,255,0.8);font-size:14px;font-family:'DM Sans',sans-serif;cursor:pointer;margin-top:8px}
+
+/* WEB */
+.tablet{width:580px;flex-shrink:0}
+.tablet-shell{background:#2A2A2E;border-radius:28px;padding:16px 16px 48px;box-shadow:0 32px 80px rgba(0,0,0,0.25);position:relative}
+.tablet-shell::after{content:'';position:absolute;bottom:16px;left:50%;transform:translateX(-50%);width:80px;height:4px;background:rgba(255,255,255,0.2);border-radius:2px}
+.tablet-screen{background:var(--bg);border-radius:16px;overflow:hidden;min-height:480px}
+.web-app{display:grid;grid-template-columns:200px 1fr;min-height:480px}
+.sidebar{background:var(--ink);padding:20px 14px;display:flex;flex-direction:column;gap:2px}
+.sb-logo{font-family:'Fraunces',serif;font-size:17px;font-weight:700;color:#fff;padding:4px 10px 8px;border-bottom:1px solid rgba(255,255,255,0.1);margin-bottom:4px}
+.sb-logo span{color:var(--mint)}
+.sb-slogan{font-size:10px;font-style:italic;font-family:'Fraunces',serif;color:rgba(255,255,255,0.28);padding:4px 10px 12px}
+.sb-section{font-size:10px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,0.25);padding:8px 10px 4px}
+.sb-item{display:flex;align-items:center;gap:10px;padding:9px 10px;border-radius:var(--r-sm);font-size:13px;color:rgba(255,255,255,0.55);cursor:pointer;transition:all 0.15s;border:none;background:none;width:100%;text-align:left}
+.sb-item.active{background:rgba(48,198,124,0.15);color:var(--mint)}
+.sb-item:hover{background:rgba(255,255,255,0.07);color:rgba(255,255,255,0.9)}
+.sb-ico{font-size:16px}
+.web-main{background:var(--bg);padding:20px;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.web-top{display:flex;align-items:center;justify-content:space-between}
+.web-top h1{font-family:'Fraunces',serif;font-size:20px;font-weight:700;color:var(--ink)}
+.web-top-acts{display:flex;gap:6px}
+.ico-btn{width:34px;height:34px;border-radius:50%;background:var(--surface);border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:15px;box-shadow:var(--shadow)}
+.web-voice-btn{display:flex;align-items:center;justify-content:center;gap:10px;background:linear-gradient(135deg,#1A2E20,#2A5C3A);color:#fff;border:none;border-radius:var(--r-md);padding:14px;font-size:14px;font-weight:600;font-family:'DM Sans',sans-serif;cursor:pointer;box-shadow:0 4px 16px rgba(30,158,94,0.25);transition:transform 0.15s;width:100%}
+.web-voice-btn:hover{transform:translateY(-1px)}
+.web-chs{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
+.wc{background:var(--surface);border-radius:var(--r-md);padding:14px 10px;box-shadow:var(--shadow);cursor:pointer;transition:transform 0.15s;border:none;text-align:left}
+.wc:active{transform:scale(0.97)}
+.wc-ico{font-size:24px;margin-bottom:6px;display:block}
+.wc h4{font-size:12px;font-weight:600;color:var(--ink);margin-bottom:2px}
+.wc p{font-size:10px;color:var(--ink2)}
+.web-chat{background:var(--surface);border-radius:var(--r-lg);box-shadow:var(--shadow);overflow:hidden;flex:1}
+.ct-top{background:var(--ink);padding:10px 14px;display:flex;align-items:center;gap:10px}
+.ct-av{width:32px;height:32px;background:var(--mint);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0}
+.ct-txt h4{font-size:13px;font-weight:600;color:#fff}
+.ct-txt span{font-size:11px;color:rgba(255,255,255,0.45)}
+.ct-acts{margin-left:auto;display:flex;gap:6px}
+.ct-ico-btn{background:rgba(255,255,255,0.1);border:none;width:28px;height:28px;border-radius:50%;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center}
+.ct-body{padding:12px;display:flex;flex-direction:column;gap:8px}
+.bubble{max-width:80%;padding:9px 13px;border-radius:14px;font-size:13px;line-height:1.5}
+.b-mia{background:var(--bg);color:var(--ink);border-radius:14px 14px 14px 3px;align-self:flex-start}
+.b-user{background:var(--mint);color:var(--ink);border-radius:14px 14px 3px 14px;align-self:flex-end}
+.ct-input-row{display:flex;gap:8px;padding:10px 12px;background:var(--surface);border-top:1px solid var(--border)}
+.ct-input{flex:1;background:var(--bg);border:none;border-radius:100px;padding:8px 14px;font-size:13px;font-family:'DM Sans',sans-serif;color:var(--ink);outline:none}
+.ct-send{width:32px;height:32px;background:var(--mint);border:none;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0}
+.ct-mic{width:32px;height:32px;background:var(--bg);border:1.5px solid var(--border);border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:14px;flex-shrink:0}
+
+@media(max-width:960px){.showcase{gap:24px;padding:0 16px 60px}.tablet{width:100%;max-width:580px}.phone{width:290px}}
+@media(max-width:640px){.showcase{flex-direction:column;align-items:center}.web-app{grid-template-columns:1fr}.sidebar{display:none}.web-chs{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body class="theme-light" id="B">
+
+<div class="page-header">
+  <div class="badge">✦ Alle Kanäle · Ein Erlebnis</div>
+  <h1>Mia <em>überall</em> dabei.</h1>
+  <p>App, Web oder einfach sprechen — auf jedem Gerät, für jeden da.</p>
+  <div class="slogan-badge">Digital war noch nie so klar!</div>
+</div>
+
+<div class="legend">
+  <div class="legend-item">🎙️ Sprache</div>
+  <div class="legend-item">📞 Telefon</div>
+  <div class="legend-item">💬 WhatsApp</div>
+  <div class="legend-item">📱 SMS</div>
+  <div class="legend-item">🌐 Web-Chat</div>
+</div>
+
+<div class="showcase">
+
+  <!-- PHONE -->
+  <div class="phone">
+    <div class="device-label">📱 App — Mobil</div>
+    <div class="phone-shell">
+      <div class="phone-screen">
+        <div class="status-bar"><span>9:41</span><span>●●● 100%</span></div>
+        <div class="app-home">
+          <div class="greeting-time">Guten Morgen ☀️</div>
+          <div class="greeting-name">Schön, dass<br>Sie da sind.</div>
+
+          <div class="mia-hero">
+            <div class="mia-top">
+              <div class="mia-av">👩</div>
+              <div class="mia-info">
+                <h2>Mia</h2>
+                <div class="online-pill"><div class="online-dot"></div>Jetzt erreichbar</div>
+              </div>
+            </div>
+            <div class="hero-btns">
+              <button class="call-btn" onclick="startVoice()">
+                <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a19.79 19.79 0 01-3.07-8.68A2 2 0 012 0h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg>
+                Mia anrufen
+              </button>
+              <button class="voice-btn" onclick="startVoice()" title="Sprachsteuerung">
+                <span class="mic-icon">🎙️</span>
+                <span class="voice-lbl">Sprechen</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="s-head">Weitere Kanäle</div>
+          <div class="ch-grid">
+            <button class="ch-card"><div class="ch-icon ci-g">💬</div><h4>WhatsApp</h4><p>Jetzt schreiben</p></button>
+            <button class="ch-card"><div class="ch-icon ci-t">📱</div><h4>SMS</h4><p>Ohne Internet</p></button>
+            <button class="ch-card"><div class="ch-icon ci-a">💛</div><h4>Chat</h4><p>Direkt tippen</p></button>
+            <button class="ch-card"><div class="ch-icon ci-b">📧</div><h4>E-Mail</h4><p>Formular senden</p></button>
+          </div>
+
+          <div class="s-head">Schnellhilfe</div>
+          <div class="q-grid">
+            <button class="q-btn"><span class="q-icon">📄</span><span>Brief</span></button>
+            <button class="q-btn"><span class="q-icon">📋</span><span>Formular</span></button>
+            <button class="q-btn"><span class="q-icon">🏥</span><span>Arzt</span></button>
+            <button class="q-btn"><span class="q-icon">🛒</span><span>Einkauf</span></button>
+          </div>
+
+          <div class="s-head">Zuletzt</div>
+          <div class="r-card">
+            <div class="r-item"><div class="r-icon">📄</div><div class="r-text"><h5>Brief vom Finanzamt</h5><p>Erklärt & beantwortet</p></div><span class="r-date">Heute</span></div>
+            <div class="r-item"><div class="r-icon">💊</div><div class="r-text"><h5>Medikamenten-Plan</h5><p>Erstellt</p></div><span class="r-date">Gestern</span></div>
+            <div class="r-item"><div class="r-icon">☎️</div><div class="r-text"><h5>Gespräch mit Mia</h5><p>14 Min · Plaudern</p></div><span class="r-date">12. Mai</span></div>
+          </div>
+        </div>
+
+        <!-- SETTINGS -->
+        <div class="settings" id="SP">
+          <div class="set-header">
+            <button class="set-back" onclick="document.getElementById('SP').classList.remove('open')">←</button>
+            <h2>Einstellungen</h2>
+          </div>
+          <div class="set-body">
+            <div class="set-section">
+              <div class="set-label">Schriftgröße</div>
+              <div class="set-card">
+                <div class="set-row"><span class="set-row-ico">🔤</span><div class="set-row-txt"><h4>Textgröße</h4><p>Wählen Sie die angenehmste Größe</p></div></div>
+                <div class="set-row"><div class="fs-row"><button class="fs-btn" onclick="setFont('sm',this)">A</button><button class="fs-btn active" onclick="setFont('md',this)">A</button><button class="fs-btn" onclick="setFont('lg',this)" style="font-size:16px">A</button><button class="fs-btn" onclick="setFont('xl',this)" style="font-size:19px">A</button></div></div>
+              </div>
+            </div>
+            <div class="set-section">
+              <div class="set-label">Darstellung</div>
+              <div class="set-card">
+                <div class="set-row"><span class="set-row-ico">🎨</span><div class="set-row-txt"><h4>Farbschema</h4><p>Hell, Dunkel, Warm oder Kontrast</p></div></div>
+                <div class="set-row">
+                  <div class="th-row">
+                    <button class="th-btn active" onclick="setTheme('light',this)"><div class="th-swatch" style="background:#F2F0EB;border:1.5px solid #ddd"></div><span>Hell</span></button>
+                    <button class="th-btn" onclick="setTheme('dark',this)"><div class="th-swatch" style="background:#1C1C1E"></div><span>Dunkel</span></button>
+                    <button class="th-btn" onclick="setTheme('warm',this)"><div class="th-swatch" style="background:#FBF5EC;border:1.5px solid #e8d5b0"></div><span>Warm</span></button>
+                    <button class="th-btn" onclick="setTheme('high',this)"><div class="th-swatch" style="background:#fff;border:2px solid #000"></div><span>Kontrast</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="set-section">
+              <div class="set-label">Mia Verhalten</div>
+              <div class="set-card">
+                <div class="set-row"><span class="set-row-ico">🔊</span><div class="set-row-txt"><h4>Laut vorlesen</h4><p>Mia liest Antworten vor</p></div><div class="set-row-act"><button class="toggle on" onclick="this.classList.toggle('on')"></button></div></div>
+                <div class="set-row"><span class="set-row-ico">🐢</span><div class="set-row-txt"><h4>Langsam sprechen</h4><p>Etwas ruhigeres Tempo</p></div><div class="set-row-act"><button class="toggle on" onclick="this.classList.toggle('on')"></button></div></div>
+                <div class="set-row"><span class="set-row-ico">🧠</span><div class="set-row-txt"><h4>Gedächtnis</h4><p>Mia merkt sich Ihre Vorlieben</p></div><div class="set-row-act"><button class="toggle" onclick="this.classList.toggle('on')"></button></div></div>
+                <div class="set-row"><span class="set-row-ico">💬</span><div class="set-row-txt"><h4>Gespräche erlaubt</h4><p>Auch zum Plaudern</p></div><div class="set-row-act"><button class="toggle on" onclick="this.classList.toggle('on')"></button></div></div>
+              </div>
+            </div>
+            <div class="set-section">
+              <div class="set-label">Konto</div>
+              <div class="set-card">
+                <div class="set-row"><span class="set-row-ico">⭐</span><div class="set-row-txt"><h4>Abonnement</h4><p>Kostenlos · 5 Gespräche/Tag</p></div><div class="set-row-act" style="font-size:11px;background:var(--mint-bg);color:var(--mint-d);padding:3px 10px;border-radius:100px;font-weight:600">Upgrade</div></div>
+                <div class="set-row"><span class="set-row-ico">🔒</span><div class="set-row-txt"><h4>Datenschutz</h4><p>Server in Deutschland · DSGVO</p></div><div class="set-row-act" style="color:var(--ink2)">›</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VOICE MODAL (zeigt sich beim Verbinden) -->
+        <div class="v-modal" id="VM">
+          <div class="v-orb" id="orbAnim">🎙️</div>
+          <h3 id="voiceStatus">Verbinde mit Mia …</h3>
+          <p>Bitte warten — Mia wird für Sie aktiviert.</p>
+          <button class="v-stop" onclick="stopVoice()">Gespräch beenden</button>
+        </div>
+
+        <!-- BOTTOM NAV -->
+        <nav class="b-nav">
+          <button class="n-item active"><span class="n-icon">🏠</span><span class="n-lbl">Start</span></button>
+          <button class="n-item"><span class="n-icon">💬</span><span class="n-lbl">Gespräche</span></button>
+          <button class="n-item"><span class="n-icon">⭐</span><span class="n-lbl">Gespeichert</span></button>
+          <button class="n-item" onclick="document.getElementById('SP').classList.add('open')"><span class="n-icon">⚙️</span><span class="n-lbl">Einstellungen</span></button>
+        </nav>
+      </div>
+    </div>
+  </div>
+
+  <!-- WEB -->
+  <div class="tablet">
+    <div class="device-label">🌐 Web-App — Tablet & Desktop</div>
+    <div class="tablet-shell">
+      <div class="tablet-screen">
+        <div class="web-app">
+          <div class="sidebar">
+            <div class="sb-logo">Klar<span>Digital</span></div>
+            <div class="sb-slogan">Digital war noch nie so klar!</div>
+            <div class="sb-section">Hauptmenü</div>
+            <button class="sb-item active"><span class="sb-ico">🏠</span>Startseite</button>
+            <button class="sb-item"><span class="sb-ico">💬</span>Gespräche</button>
+            <button class="sb-item"><span class="sb-ico">📄</span>Dokumente</button>
+            <button class="sb-item"><span class="sb-ico">⭐</span>Gespeichert</button>
+            <div class="sb-section">Kanäle</div>
+            <button class="sb-item"><span class="sb-ico">🎙️</span>Sprechen</button>
+            <button class="sb-item"><span class="sb-ico">📞</span>Anrufen</button>
+            <button class="sb-item"><span class="sb-ico">💬</span>WhatsApp</button>
+            <button class="sb-item"><span class="sb-ico">📱</span>SMS</button>
+            <div class="sb-section">Konto</div>
+            <button class="sb-item"><span class="sb-ico">👤</span>Profil</button>
+            <button class="sb-item"><span class="sb-ico">⚙️</span>Einstellungen</button>
+          </div>
+          <div class="web-main">
+            <div class="web-top">
+              <h1>Guten Morgen 👋</h1>
+              <div class="web-top-acts"><button class="ico-btn">🔔</button><button class="ico-btn">⚙️</button></div>
+            </div>
+            <button class="web-voice-btn" onclick="startVoice()">🎙️ &nbsp;Jetzt mit Mia sprechen — direkt im Browser, ohne App</button>
+            <div class="web-chs">
+              <button class="wc"><span class="wc-ico">📞</span><h4>Anrufen</h4><p>Telefon</p></button>
+              <button class="wc"><span class="wc-ico">💬</span><h4>WhatsApp</h4><p>Nachricht</p></button>
+              <button class="wc"><span class="wc-ico">💛</span><h4>Web-Chat</h4><p>Direkt hier</p></button>
+              <button class="wc"><span class="wc-ico">📱</span><h4>SMS</h4><p>Ohne Internet</p></button>
+            </div>
+            <div class="web-chat">
+              <div class="ct-top">
+                <div class="ct-av">👩</div>
+                <div class="ct-txt"><h4>Mia — KlarDigital</h4><span>● Online · antwortet sofort</span></div>
+                <div class="ct-acts"><button class="ct-ico-btn">🎙️</button><button class="ct-ico-btn">📞</button></div>
+              </div>
+              <div class="ct-body">
+                <div class="bubble b-mia">Guten Morgen! Ich bin Mia — wie kann ich Ihnen heute helfen? 😊</div>
+                <div class="bubble b-user">Ich habe einen Brief vom Finanzamt bekommen.</div>
+                <div class="bubble b-mia">Kein Problem! Was steht als Betreff oben im Brief?</div>
+              </div>
+              <div class="ct-input-row">
+                <button class="ct-mic">🎙️</button>
+                <input class="ct-input" placeholder="Schreiben oder Mikrofon nutzen …" type="text">
+                <button class="ct-send">➤</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+/* ─── SYNTHFLOW WIDGET INTEGRATION ─── */
+const AGENT_ID = '8e593c25-76c7-4801-b91f-8d981a20f6dd';
+
+// Synthflow Widget laden
+(function() {
+  var s = document.createElement('script');
+  s.src = 'https://widget.synthflow.ai/widget.js';
+  s.async = true;
+  s.defer = true;
+  s.dataset.agentId = AGENT_ID;
+  s.dataset.mode = 'overlay';
+  s.onload = function() { console.log('Synthflow Widget geladen'); };
+  document.head.appendChild(s);
+})();
+
+// Sprachgespräch starten
+function startVoice() {
+  const modal = document.getElementById('VM');
+  const status = document.getElementById('voiceStatus');
+  const orb = document.getElementById('orbAnim');
+  modal.classList.add('open');
+  status.textContent = 'Verbinde mit Mia …';
+  orb.textContent = '🎙️';
+
+  // Synthflow Widget aufrufen falls verfügbar
+  setTimeout(function() {
+    if (window.SynthflowWidget && typeof window.SynthflowWidget.open === 'function') {
+      window.SynthflowWidget.open();
+      status.textContent = 'Mia hört zu …';
+    } else if (document.querySelector('synthflow-widget')) {
+      document.querySelector('synthflow-widget').click();
+      status.textContent = 'Mia hört zu …';
+    } else {
+      // Direkte API-Verbindung als Fallback
+      status.textContent = 'Mia hört zu …';
+      orb.textContent = '🎙️';
+    }
+  }, 800);
+}
+
+// Gespräch beenden
+function stopVoice() {
+  document.getElementById('VM').classList.remove('open');
+  if (window.SynthflowWidget && typeof window.SynthflowWidget.close === 'function') {
+    window.SynthflowWidget.close();
+  }
+}
+
+/* ─── EINSTELLUNGEN ─── */
+function setFont(s, btn) {
+  document.querySelectorAll('.fs-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const B = document.getElementById('B');
+  B.className = B.className.replace(/font-\w+/g, '').trim() + ' font-' + s;
+}
+
+function setTheme(t, btn) {
+  document.querySelectorAll('.th-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  const B = document.getElementById('B');
+  B.className = B.className.replace(/theme-\w+/g, '').trim() + ' theme-' + t;
+}
+</script>
+
+<!-- Synthflow Voice Widget Container (versteckt, wird per Script aktiviert) -->
+<div id="synthflow-widget-container" style="position:fixed;bottom:20px;right:20px;z-index:9999"></div>
+</body>
+</html>
