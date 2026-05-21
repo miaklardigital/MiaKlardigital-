@@ -1,0 +1,78 @@
+name: KlarDigital CIS Monitor
+on:
+  schedule:
+    - cron: '0 6 * * *'
+    - cron: '0 12 * * *'
+    - cron: '0 20 * * *'
+  workflow_dispatch:
+
+jobs:
+  system-health:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Mia App
+        id: mia
+        run: |
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" --max-time 10 https://miaklardigital.github.io/mia-app)
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+
+      - name: Check miaklardigital.de
+        id: domain
+        run: |
+          STATUS=$(curl -o /dev/null -s -w "%{http_code}" --max-time 10 https://miaklardigital.de || echo "000")
+          echo "status=$STATUS" >> $GITHUB_OUTPUT
+
+      - name: Build Status Report
+        run: |
+          echo "## 🤖 KlarDigital System Report — $(date '+%d.%m.%Y %H:%M')" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "| Service | Status | Notiz |" >> $GITHUB_STEP_SUMMARY
+          echo "|---|---|---|" >> $GITHUB_STEP_SUMMARY
+
+          if [ "${{ steps.mia.outputs.status }}" = "200" ]; then
+            echo "| Mia App (GitHub Pages) | ✅ Online | |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| Mia App (GitHub Pages) | ❌ Problem | Status: ${{ steps.mia.outputs.status }} |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+          if [ "${{ steps.domain.outputs.status }}" = "200" ]; then
+            echo "| miaklardigital.de | ✅ Online | |" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "| miaklardigital.de | ⚠️ Prüfen | Status: ${{ steps.domain.outputs.status }} |" >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Alert on failure
+        if: steps.mia.outputs.status != '200'
+        run: |
+          echo "KRITISCH: Mia App nicht erreichbar!"
+          echo "Status Code: ${{ steps.mia.outputs.status }}"
+          exit 1
+
+  intelligence-scan:
+    runs-on: ubuntu-latest
+    if: github.event.schedule == '0 6 * * *' || github.event_name == 'workflow_dispatch'
+    steps:
+      - name: Scan AI News Sources
+        run: |
+          echo "=== KlarDigital Intelligence Scan ===" 
+          echo "Datum: $(date '+%d.%m.%Y')"
+          echo ""
+
+          echo "--- HackerNews AI Topics ---"
+          curl -s "https://hnrss.org/newest?q=AI+germany+senior&count=5" | \
+            grep -oP '(?<=<title>)[^<]+' | head -5 || echo "Keine neuen Einträge"
+
+          echo ""
+          echo "--- DigitalPakt/Senioren News ---"
+          curl -s "https://news.google.com/rss/search?q=KI+Senioren+Deutschland&hl=de&gl=DE&ceid=DE:de" | \
+            grep -oP '(?<=<title>)[^<]+' | grep -v "Google News" | head -3 || echo "Keine neuen Einträge"
+
+          echo ""
+          echo "--- Handwerk Digital ---"
+          curl -s "https://news.google.com/rss/search?q=Handwerk+KI+Digitalisierung&hl=de&gl=DE&ceid=DE:de" | \
+            grep -oP '(?<=<title>)[^<]+' | grep -v "Google News" | head -3 || echo "Keine neuen Einträge"
+
+      - name: Update Intelligence Log
+        run: |
+          echo "## Intelligence Log — $(date '+%d.%m.%Y')" >> $GITHUB_STEP_SUMMARY
+          echo "Scan abgeschlossen. Ergebnisse oben im Job-Log." >> $GITHUB_STEP_SUMMARY
